@@ -11,11 +11,13 @@ public interface IItemService
         CancellationToken cancellationToken);
     Task AddAsync(ItemDto itemDto,
         CancellationToken cancellationToken);
-
     Task EditAsync(ItemDto itemDto,
+        Guid userId,
         CancellationToken cancellationToken);
     Task RaiseAsync(Guid itemId,
+        Guid userId,
         CancellationToken cancellationToken);
     Task DeleteAsync(Guid itemId,
+        Guid userId,
         CancellationToken cancellationToken);
 }
