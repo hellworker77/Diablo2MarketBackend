@@ -48,26 +48,45 @@ public class ItemAttributeService : IItemAttributeService
     }
 
     public async Task AddToItemAsync(Guid itemId,
+        Guid userId,
         ItemAttributeDto itemAttributeDto,
         CancellationToken cancellationToken)
     {
         var itemAttribute = _mapper.ReverseMap(itemAttributeDto);
+        if(itemAttribute!.Item!.OwnerId != userId)
+        {
+            throw new PermissionDeniedException();
+        }
+
         itemAttribute.ItemId = itemId;
 
         await _itemAttributeRepository.AddAsync(itemAttribute, cancellationToken);
     }
 
     public async Task EditAsync(ItemAttributeDto itemAttributeDto,
+        Guid userId,
         CancellationToken cancellationToken)
     {
         var itemAttribute = _mapper.ReverseMap(itemAttributeDto);
+        if (itemAttribute!.Item!.OwnerId != userId)
+        {
+            throw new PermissionDeniedException();
+        }
 
         await _itemAttributeRepository.EditAsync(itemAttribute, cancellationToken);
     }
 
-    public async Task DeleteAsync(Guid itemId, 
+    public async Task DeleteAsync(Guid itemAttributeId,
+        Guid userId,
         CancellationToken cancellationToken)
     {
-        await _itemAttributeRepository.DeleteAsync(itemId, cancellationToken);
+        var itemAttributeDto = await GetByIdAsync(itemAttributeId, cancellationToken);
+        var itemAttribute = _mapper.ReverseMap(itemAttributeDto);
+        if (itemAttribute!.Item!.OwnerId != userId)
+        {
+            throw new PermissionDeniedException();
+        }
+
+        await _itemAttributeRepository.DeleteAsync(itemAttributeId, cancellationToken);
     }
 }

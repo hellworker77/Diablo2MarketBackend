@@ -9,10 +9,13 @@ public interface IItemAttributeService
     Task<IList<ItemAttributeDto>> GetFromItemAsync(Guid itemId,
         CancellationToken cancellationToken);
     Task AddToItemAsync(Guid itemId,
+        Guid userId,
         ItemAttributeDto itemAttributeDto,
         CancellationToken cancellationToken);
     Task EditAsync(ItemAttributeDto itemAttributeDto,
+        Guid userId,
         CancellationToken cancellationToken);
     Task DeleteAsync(Guid itemAttributeId,
+        Guid userId,
         CancellationToken cancellationToken);
 }

@@ -1,4 +1,5 @@
-﻿using Common.Mappers;
+﻿using Common.Exceptions;
+using Common.Mappers;
 using Common.Models;
 using Common.Services.Interfaces;
 using Dal.Interfaces;
@@ -64,20 +65,33 @@ public class ItemService : IItemService
     }
 
     public async Task EditAsync(ItemDto itemDto,
+        Guid userId,
         CancellationToken cancellationToken)
     {
+        if (userId != itemDto.OwnerId)
+        {
+            throw new PermissionDeniedException();
+        }
+
         var item = _mapper.ReverseMap(itemDto);
 
         await _itemRepository.EditAsync(item, cancellationToken);
     }
 
-    public async Task RaiseAsync(Guid itemId, CancellationToken cancellationToken)
+    public async Task RaiseAsync(Guid itemId, 
+        Guid userId,
+        CancellationToken cancellationToken)
     {
         var item = await _itemRepository.GetByIdAsync(itemId, cancellationToken);
 
         if (item == null)
         {
             throw new NullReferenceException($"Item with id {itemId} not found");
+        }
+
+        if (item.OwnerId != userId)
+        {
+            throw new PermissionDeniedException();
         }
 
         var dateNow = DateTime.Now.ToUniversalTime();
@@ -101,8 +115,15 @@ public class ItemService : IItemService
     }
 
     public async Task DeleteAsync(Guid itemId,
+        Guid userId,
         CancellationToken cancellationToken)
     {
+        var item = await GetByIdAsync(itemId, cancellationToken);
+        if (item.OwnerId != userId)
+        {
+            throw new PermissionDeniedException();
+        }
+
         await _itemRepository.DeleteAsync(itemId, cancellationToken);
     }
 }
