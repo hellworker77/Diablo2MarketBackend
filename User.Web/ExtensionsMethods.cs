@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Dal.Data;
+using Entities;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
 using System.IdentityModel.Tokens.Jwt;
 
@@ -6,6 +9,17 @@ namespace Account.Web
 {
     internal static class ExtensionsMethods
     {
+        public static void AddIdentities(this IServiceCollection service)
+        {
+            service.AddDefaultIdentity<ApplicationUser>()
+                .AddRoles<IdentityRole<Guid>>()
+                .AddEntityFrameworkStores<ApplicationContext>()
+                .AddUserManager<UserManager<ApplicationUser>>()
+                .AddRoleManager<RoleManager<IdentityRole<Guid>>>()
+                .AddDefaultTokenProviders();
+
+        }
+
         public static void ConfigureAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();

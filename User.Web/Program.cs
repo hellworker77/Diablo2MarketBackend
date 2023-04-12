@@ -24,12 +24,7 @@ namespace Account.Web
                 options.UseNpgsql(builder.Configuration.GetConnectionString("entityDb"),
                     migration => migration.MigrationsAssembly(migrationAssembly)));
 
-            builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
-                .AddEntityFrameworkStores<ApplicationContext>()
-                .AddRoleManager<RoleManager<IdentityRole<Guid>>>()
-                .AddUserManager<UserManager<ApplicationUser>>()
-                .AddDefaultTokenProviders();
-
+            builder.Services.AddIdentities();
 
             var app = builder.Build();
 
