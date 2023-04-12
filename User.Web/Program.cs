@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using Entities;
+using Swashbuckle.AspNetCore.SwaggerUI;
+using Account.Web;
 
 namespace User.Web
 {
@@ -11,11 +13,11 @@ namespace User.Web
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGenWithAuth(builder.Configuration);
+            builder.Services.ConfigureAuthentication(builder.Configuration);
 
             var migrationAssembly = typeof(Program).GetTypeInfo().Assembly.GetName().Name;
 
@@ -36,13 +38,22 @@ namespace User.Web
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerUI(options =>
+                {
+                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagger market");
+                    options.DocExpansion(DocExpansion.List);
+                    options.OAuthClientId("Api");
+                    options.OAuthClientSecret("client_secret");
+                });
             }
+
+            app.UseRouting();
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            app.UseAuthentication();
 
+            app.UseAuthorization();
 
             app.MapControllers();
 
