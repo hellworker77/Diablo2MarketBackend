@@ -74,6 +74,7 @@ internal static class ExtensionsMethods
         service.AddTransient<AbstractExceptionResponse, ArgumentExceptionResponse>();
         service.AddTransient<AbstractExceptionResponse, EntityWithIdNotFoundExceptionResponse>();
         service.AddTransient<AbstractExceptionResponse, NullReferenceExceptionResponse>();
+        service.AddTransient<AbstractExceptionResponse, PermissionDeniedExceptionResponse>();
         service.AddTransient<AbstractExceptionResponse, BaseExceptionResponse>();
         service.AddTransient(AbstractExceptionResponse.GetResponseHandler);
     }
