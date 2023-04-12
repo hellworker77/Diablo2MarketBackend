@@ -63,6 +63,7 @@ internal static class ExtensionsMethods
     }
     public static void AddMappers(this IServiceCollection service)
     {
+        service.AddTransient<ApplicationUser>();
         service.AddTransient<DealMemberMapper>();
         service.AddTransient<ItemMapper>();
         service.AddTransient<ItemAttributeMapper>();
