@@ -22,19 +22,10 @@ public static class IdentityServerConfiguration
                     IdentityServerConstants.StandardScopes.Profile,
                     IdentityServerConstants.StandardScopes.Email,
                     "api",
-                    "trading"
+                    "trading",
+                    "account"
                 }
             },
-            new Client
-            {
-                ClientId = "m2m.client",
-                ClientName = "Client Credentials Client",
-
-                AllowedGrantTypes = GrantTypes.ClientCredentials,
-                ClientSecrets = { new Secret("511536EF-F270-4058-80CA-1C89C192F69A".Sha256()) },
-
-                AllowedScopes = { "trading" }
-            }
         };
     public static IEnumerable<ApiScope> GetApiScopes() =>
         new List<ApiScope>
@@ -74,6 +65,24 @@ public static class IdentityServerConfiguration
                     JwtClaimTypes.Id,
                     JwtClaimTypes.Profile
                 }
+            },
+            new ApiScope
+            {
+                Name = "account",
+                DisplayName = "account",
+                Enabled = true,
+                UserClaims =
+                {
+                    JwtClaimTypes.Name,
+                    JwtClaimTypes.Email,
+                    JwtClaimTypes.Subject,
+                    JwtClaimTypes.Role,
+                    JwtClaimTypes.Address,
+                    JwtClaimTypes.Confirmation,
+                    JwtClaimTypes.EmailVerified,
+                    JwtClaimTypes.Id,
+                    JwtClaimTypes.Profile
+                }
             }
         };
 
@@ -81,7 +90,8 @@ public static class IdentityServerConfiguration
         new List<ApiResource>
         {
             new("api", "api") {Scopes = new List<string>{"api"}},
-            new("trading", "trading") {Scopes = new List<string>{"trading"}}
+            new("trading", "trading") {Scopes = new List<string>{"trading"}},
+            new("account", "account") {Scopes = new List<string>{"account"}}
         };
 
     public static IEnumerable<IdentityResource> GetIdentityResources() =>
