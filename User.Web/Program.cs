@@ -4,9 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using Entities;
 using Swashbuckle.AspNetCore.SwaggerUI;
-using Account.Web;
 
-namespace User.Web
+namespace Account.Web
 {
     public class Program
     {
