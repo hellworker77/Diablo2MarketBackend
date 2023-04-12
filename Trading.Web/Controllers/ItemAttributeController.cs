@@ -51,23 +51,24 @@ namespace Trading.Web.Controllers
         }
 
         [Authorize]
-        [HttpGet("edit")]
-        public async Task<IActionResult> EditAsync(ItemAttributeDto itemAttributeDto,
+        [HttpPut("edit")]
+        public async Task<IActionResult> EditAsync(Guid itemId, ItemAttributeDto itemAttributeDto,
             CancellationToken cancellationToken)
         {
             var userId = _identityService.GetUserIdentity();
-            await _itemAttributeService.EditAsync(itemAttributeDto, userId, cancellationToken);
+            await _itemAttributeService.EditAsync(itemId, itemAttributeDto, userId, cancellationToken);
 
             return Ok("Item Attribute edited");
         }
 
         [Authorize]
-        [HttpGet("delete")]
-        public async Task<IActionResult> DeleteAsync(Guid itemAttributeId,
+        [HttpDelete("delete")]
+        public async Task<IActionResult> DeleteAsync(Guid itemId,
+            Guid itemAttributeId,
             CancellationToken cancellationToken)
         {
             var userId = _identityService.GetUserIdentity();
-            await _itemAttributeService.DeleteAsync(itemAttributeId, userId, cancellationToken);
+            await _itemAttributeService.DeleteAsync(itemId, itemAttributeId, userId, cancellationToken);
 
             return Ok("Item Attribute deleted");
         }

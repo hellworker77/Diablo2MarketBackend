@@ -12,10 +12,11 @@ public interface IItemAttributeService
         Guid userId,
         ItemAttributeDto itemAttributeDto,
         CancellationToken cancellationToken);
-    Task EditAsync(ItemAttributeDto itemAttributeDto,
+    Task EditAsync(Guid itemId, ItemAttributeDto itemAttributeDto,
         Guid userId,
         CancellationToken cancellationToken);
-    Task DeleteAsync(Guid itemAttributeId,
+    Task DeleteAsync(Guid itemId,
+        Guid itemAttributeId,
         Guid userId,
         CancellationToken cancellationToken);
 }

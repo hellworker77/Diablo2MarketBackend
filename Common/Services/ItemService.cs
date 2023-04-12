@@ -68,7 +68,8 @@ public class ItemService : IItemService
         Guid userId,
         CancellationToken cancellationToken)
     {
-        if (userId != itemDto.OwnerId)
+        var validItem = await GetByIdAsync(itemDto.Id, cancellationToken);
+        if (userId != validItem.OwnerId)
         {
             throw new PermissionDeniedException();
         }

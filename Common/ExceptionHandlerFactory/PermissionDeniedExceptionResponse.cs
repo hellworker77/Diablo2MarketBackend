@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace Common.ExceptionHandlerFactory
 {
-    internal class PermissionDeniedExceptionResponse : AbstractExceptionResponse
+    public class PermissionDeniedExceptionResponse : AbstractExceptionResponse
     {
         protected override Type FittedExceptionType => typeof(PermissionDeniedException);
 
