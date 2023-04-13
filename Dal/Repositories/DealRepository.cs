@@ -1,6 +1,7 @@
 ﻿using Dal.Data;
 using Dal.Interfaces;
 using Entities;
+using Filters.Abstractions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dal.Repositories;
@@ -28,6 +29,25 @@ public class DealRepository : IDealRepository
             .FirstOrDefaultAsync(x => x.Id == dealId, cancellationToken);
 
         return deal;
+    }
+
+    public async Task<IList<Deal>> GetFilteredChunkAsync(int index, 
+        int size, 
+        AbstractFilterSpecification<Deal> abstractFilterSpecification, 
+        CancellationToken cancellationToken)
+    {
+        var deals = await _dbSet.AsNoTracking()
+           .Include(x => x.Discussion!)
+           .ThenInclude(x => x.Members)
+           .Include(x => x.DealMembers)
+           .Include(x => x.Goods)
+           .ThenInclude(x => x.Attributes)
+           .Where(abstractFilterSpecification.SpecificationExpression)
+           .Skip(index * size)
+           .Take(size)
+           .ToListAsync(cancellationToken);
+
+        return deals;
     }
 
     public async Task<IList<Deal>> GetChunkAsync(Guid userId,

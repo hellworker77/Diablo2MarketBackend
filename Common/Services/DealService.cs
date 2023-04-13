@@ -5,6 +5,7 @@ using Common.Services.Interfaces;
 using Dal.Interfaces;
 using Entities;
 using Entities.Enums;
+using Filters.Abstractions;
 using Microsoft.AspNetCore.Identity;
 
 namespace Common.Services;
@@ -42,6 +43,20 @@ public class DealService : IDealService
         }
 
         return _mapper.Map(deal);
+    }
+
+    public async Task<IList<DealDto>> GetFilteredChunkAsync(int index, 
+        int size, 
+        AbstractFilterSpecification<Deal> abstractFilterSpecification, 
+        CancellationToken cancellationToken)
+    {
+        var deals = await _dealRepository.GetFilteredChunkAsync(index, size, abstractFilterSpecification, cancellationToken);
+        if (deals is null)
+        {
+            throw new NullReferenceException("Deals in that area are not found");
+        }
+
+        return _mapper.MapList(deals);
     }
 
     public async Task<IList<DealDto>> GetUserChunkAsync(Guid userId,
@@ -136,7 +151,9 @@ public class DealService : IDealService
             dealDto.Status = DealStatus.Success;
 
             var deal = _mapper.ReverseMap(dealDto);
-            await _dealRepository.EditStatusAsync(deal, cancellationToken);
+            deal.UpdatedStatusTime = DateTime.Now.ToUniversalTime();
+
+            await _dealRepository.EditAsync(deal, cancellationToken);
 
             var sellerId = dealDto.DealMembers
                 !.FirstOrDefault(x => x.Status == DealMemberStatus.Seller)
