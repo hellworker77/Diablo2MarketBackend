@@ -1,4 +1,9 @@
-﻿using Dal.Data;
+﻿using Account.Web.Services;
+using Account.Web.Services.Interfaces;
+using Common.Mappers;
+using Common.Services;
+using Common.Services.Interfaces;
+using Dal.Data;
 using Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -17,7 +22,17 @@ namespace Account.Web
                 .AddUserManager<UserManager<ApplicationUser>>()
                 .AddRoleManager<RoleManager<IdentityRole<Guid>>>()
                 .AddDefaultTokenProviders();
+        }
 
+        public static void AddServices(this IServiceCollection services)
+        {
+            services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<IIdentityService, IdentityService>();
+        }
+
+        public static void AddMappers(this IServiceCollection service)
+        {
+            service.AddTransient<ApplicationUserMapper>();
         }
 
         public static void ConfigureAuthentication(this IServiceCollection services, IConfiguration configuration)
