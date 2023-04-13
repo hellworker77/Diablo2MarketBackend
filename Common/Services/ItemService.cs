@@ -32,6 +32,16 @@ public class ItemService : IItemService
         return _mapper.Map(item);
     }
 
+    public async Task<IList<ItemDto>> GetChunkOrderByPostedDateAsync(int index, 
+        int size, 
+        CancellationToken cancellationToken)
+    {
+        var items = await _itemRepository.GetChunkOrderByPostedDateAsync(index, size, cancellationToken);
+        var itemsDto = _mapper.MapList(items);
+
+        return itemsDto;
+    }
+
     public async Task<IList<ItemDto>> GetChunkAsync(int index,
         int size,
         CancellationToken cancellationToken)

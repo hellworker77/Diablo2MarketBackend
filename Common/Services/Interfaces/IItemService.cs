@@ -6,6 +6,9 @@ public interface IItemService
 {
     Task<ItemDto> GetByIdAsync(Guid itemId,
         CancellationToken cancellationToken);
+    Task<IList<ItemDto>> GetChunkOrderByPostedDateAsync(int index,
+            int size,
+            CancellationToken cancellationToken);
     Task<IList<ItemDto>> GetChunkAsync(int index,
         int size,
         CancellationToken cancellationToken);
