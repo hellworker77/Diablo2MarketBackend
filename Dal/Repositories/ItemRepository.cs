@@ -21,19 +21,34 @@ public class ItemRepository : IItemRepository
         var item = await _dbSet.AsNoTracking()
             .Include(x => x.Deal)
             .Include(x => x.Owner)
-            .Include(x=>x.Attributes)
+            .Include(x => x.Attributes)
             .FirstOrDefaultAsync(x => x.Id == itemId, cancellationToken);
 
         return item;
     }
+
+    public async Task<IList<Item>> GetChunkOrderByPostedDateAsync(int index,
+        int size,
+        CancellationToken cancellationToken)
+    {
+        return await _dbSet.AsNoTracking()
+            .Include(x => x.Deal)
+            .Include(x => x.Owner)
+            .Include(x => x.Attributes)
+            .OrderBy(x => x.PostedDate)
+            .Skip(index * size)
+            .Take(size)
+            .ToListAsync(cancellationToken);
+    }
+
     public async Task<IList<Item>> GetChunkAsync(int index,
         int size,
         CancellationToken cancellationToken)
     {
         var items = await _dbSet.AsNoTracking()
-            .Include(x=>x.Deal)
-            .Include(x=>x.Owner)
-            .Include(x=>x.Attributes)
+            .Include(x => x.Deal)
+            .Include(x => x.Owner)
+            .Include(x => x.Attributes)
             .Skip(index * size)
             .Take(size)
             .ToListAsync(cancellationToken);

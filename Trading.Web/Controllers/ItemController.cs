@@ -27,6 +27,16 @@ namespace Trading.Web.Controllers
             return Ok(itemDto);
         }
 
+        [HttpGet("chunkOrderByPostedDate")]
+        public async Task<IActionResult> GetChunkOrderByPostedDateAsync(int index,
+            int size,
+            CancellationToken cancellationToken)
+        {
+            var itemsDto = await _itemService.GetChunkOrderByPostedDateAsync(index, size, cancellationToken);
+
+            return Ok(itemsDto);        
+        }
+
         [HttpGet("chunk")]
         public async Task<IActionResult> GetChunkAsync(int index,
             int size,
