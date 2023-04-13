@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using Entities;
 using Swashbuckle.AspNetCore.SwaggerUI;
+using Account.Web.Middlewares;
 
 namespace Account.Web
 {
@@ -27,6 +28,7 @@ namespace Account.Web
             builder.Services.AddIdentities();
             builder.Services.AddServices();
             builder.Services.AddMappers();
+            builder.Services.AddExceptionHandlers();
 
             var app = builder.Build();
 
@@ -42,6 +44,8 @@ namespace Account.Web
                     options.OAuthClientSecret("client_secret");
                 });
             }
+
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
 
             app.UseRouting();
 

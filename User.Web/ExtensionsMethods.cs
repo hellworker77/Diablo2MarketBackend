@@ -1,5 +1,6 @@
 ﻿using Account.Web.Services;
 using Account.Web.Services.Interfaces;
+using Common.ExceptionHandlerFactory;
 using Common.Mappers;
 using Common.Services;
 using Common.Services.Interfaces;
@@ -33,6 +34,16 @@ namespace Account.Web
         public static void AddMappers(this IServiceCollection service)
         {
             service.AddTransient<ApplicationUserMapper>();
+        }
+
+        public static void AddExceptionHandlers(this IServiceCollection service)
+        {
+            service.AddTransient<AbstractExceptionResponse, ArgumentExceptionResponse>();
+            service.AddTransient<AbstractExceptionResponse, EntityWithIdNotFoundExceptionResponse>();
+            service.AddTransient<AbstractExceptionResponse, NullReferenceExceptionResponse>();
+            service.AddTransient<AbstractExceptionResponse, PermissionDeniedExceptionResponse>();
+            service.AddTransient<AbstractExceptionResponse, BaseExceptionResponse>();
+            service.AddTransient(AbstractExceptionResponse.GetResponseHandler);
         }
 
         public static void ConfigureAuthentication(this IServiceCollection services, IConfiguration configuration)
