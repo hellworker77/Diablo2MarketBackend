@@ -1,67 +1,72 @@
-﻿using Entities;
-using Microsoft.AspNetCore.Identity;
+﻿using Account.Web.Services.Interfaces;
+using Common.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace User.Web.Controllers
+namespace Account.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly RoleManager<IdentityRole<Guid>> _roleManager;
+        private readonly IAccountService _accountService;
+        private readonly IIdentityService _identityService;
 
-        public AccountController(UserManager<ApplicationUser> userManager,
-            RoleManager<IdentityRole<Guid>> roleManager)
+        public AccountController(IAccountService accountService,
+            IIdentityService identityService)
         {
-            _userManager = userManager;
-            _roleManager = roleManager;
+            _accountService = accountService;
+            _identityService = identityService;
         }
-        [HttpPost("register")]
-        public async Task<IActionResult> Register(string username, string email, string password)
+
+        [Authorize]
+        [HttpGet("me")]
+        public async Task<IActionResult> GetMeAsync()
         {
-            IActionResult response;
+            var userId = _identityService.GetUserIdentity();
+            var user = await _accountService.GetMeAsync(userId);
 
-            var user = new ApplicationUser
-            {
-                UserName = username,
-                Email = email,
-                EmailConfirmed = true
-            };
+            return Ok(user);
+        }
 
-            var result = await _userManager.CreateAsync(user, password);
+        [Authorize]
+        [HttpPut("encreaseBalance")]
+        public async Task<IActionResult> EncreaseBalanceAsync(uint amount)
+        {
+            var userId = _identityService.GetUserIdentity();
+            await _accountService.EncreaseBalanceAsync(userId, amount);
 
+            return Ok("Balance has been increased");
+        }
+
+        [HttpPost("register")]
+        public async Task<IActionResult> RegisterAsync(string username, 
+            string email, 
+            string password)
+        {
+            var result = await _accountService.RegisterAsync(username, email, password);
             if (!result.Succeeded)
             {
-                response = BadRequest(result.ToString());
+                return BadRequest(result.ToString());
             }
             else
             {
-                response = Ok(result.ToString());
+                return Ok(result.ToString());
             }
-
-            return response;
         }
 
         [HttpPost("role")]
-        public async Task<IActionResult> RegisterRole(string roleName)
+        public async Task<IActionResult> RegisterRoleAsync(string roleName)
         {
-            IActionResult response;
-
-            var role = new IdentityRole<Guid>("admin");
-
-            var result = await _roleManager.CreateAsync(role);
-
+            var result = await _accountService.RegisterRoleAsync(roleName);
             if (!result.Succeeded)
             {
-                response = BadRequest(result.ToString());
+                return BadRequest(result.ToString());
             }
             else
             {
-                response = Ok(result.ToString());
+                return Ok(result.ToString());
             }
-
-            return response;
         }
     }
 }

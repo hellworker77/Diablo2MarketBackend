@@ -1,5 +1,6 @@
 ﻿using Common.Models;
 using Common.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Trading.Web.Controllers
@@ -9,10 +10,12 @@ namespace Trading.Web.Controllers
     public class ItemController : ControllerBase
     {
         private readonly IItemService _itemService;
+        private readonly IIdentityService _identityService;
 
-        public ItemController(IItemService itemService)
+        public ItemController(IItemService itemService, IIdentityService identityService)
         {
             _itemService = itemService;
+            _identityService = identityService;
         }
 
         [HttpGet("id")]
@@ -34,35 +37,48 @@ namespace Trading.Web.Controllers
             return Ok(itemsDto);
         }
 
+        [Authorize]
         [HttpPost("add")]
         public async Task<IActionResult> AddAsync(ItemDto itemDto,
             CancellationToken cancellationToken)
         {
+            var userId = _identityService.GetUserIdentity();
+            itemDto.OwnerId = userId;
+
             await _itemService.AddAsync(itemDto, cancellationToken);
 
             return Ok("Item added");
         }
+
+        [Authorize]
         [HttpPut("edit")]
         public async Task<IActionResult> EditAsync(ItemDto itemDto,
             CancellationToken cancellationToken)
         {
-            await _itemService.EditAsync(itemDto, cancellationToken);
+            var userId = _identityService.GetUserIdentity();
+            await _itemService.EditAsync(itemDto, userId, cancellationToken);
 
             return Ok("Item edited");
         }
+
+        [Authorize]
         [HttpPut("raise")]
         public async Task<IActionResult> RaiseAsync(Guid itemId,
             CancellationToken cancellationToken)
         {
-            await _itemService.RaiseAsync(itemId, cancellationToken);
+            var userId = _identityService.GetUserIdentity();
+            await _itemService.RaiseAsync(itemId, userId, cancellationToken);
 
             return Ok("Item raised");
         }
+
+        [Authorize]
         [HttpDelete("delete")]
         public async Task<IActionResult> DeleteAsync(Guid itemId,
             CancellationToken cancellationToken)
         {
-            await _itemService.DeleteAsync(itemId, cancellationToken);
+            var userId = _identityService.GetUserIdentity();
+            await _itemService.DeleteAsync(itemId, userId, cancellationToken);
 
             return Ok("Item deleted");
         }

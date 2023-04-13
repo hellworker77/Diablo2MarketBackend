@@ -18,7 +18,7 @@ internal static class ExtensionsMethods
                 x.RequireHttpsMetadata = false;
                 x.TokenValidationParameters = new TokenValidationParameters()
                 {
-                    ValidAudiences = new[] { "trading" }
+                    ValidAudiences = new[] { "trading", "account" }
                 };
             });
     }

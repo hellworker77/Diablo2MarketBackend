@@ -1,6 +1,7 @@
 ﻿using Common.Models;
 using Common.Services;
 using Common.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,11 +12,14 @@ namespace Trading.Web.Controllers
     public class ItemAttributeController : ControllerBase
     {
         private readonly IItemAttributeService _itemAttributeService;
+        private readonly IIdentityService _identityService;
 
-        public ItemAttributeController(IItemAttributeService itemAttributeService)
+        public ItemAttributeController(IItemAttributeService itemAttributeService, IIdentityService identityService)
         {
             _itemAttributeService = itemAttributeService;
+            _identityService = identityService;
         }
+
         [HttpGet("id")]
         public async Task<IActionResult> GetByIdAsync(Guid itemAttributeId,
             CancellationToken cancellationToken)
@@ -24,6 +28,7 @@ namespace Trading.Web.Controllers
 
             return Ok(itemAttributeDto);
         }
+
         [HttpGet("itemId")]
         public async Task<IActionResult> GetChunkAsync(Guid itemId,
             CancellationToken cancellationToken)
@@ -32,28 +37,38 @@ namespace Trading.Web.Controllers
 
             return Ok(itemAttributesDto);
         }
+
+        [Authorize]
         [HttpPost("add")]
         public async Task<IActionResult> AddAsync(Guid itemId,
             ItemAttributeDto itemAttributeDto,
             CancellationToken cancellationToken)
         {
-            await _itemAttributeService.AddToItemAsync(itemId, itemAttributeDto, cancellationToken);
+            var userId = _identityService.GetUserIdentity();
+            await _itemAttributeService.AddToItemAsync(itemId, userId, itemAttributeDto, cancellationToken);
 
             return Ok("Item Attribute added");
         }
-        [HttpGet("edit")]
-        public async Task<IActionResult> EditAsync(ItemAttributeDto itemAttributeDto,
+
+        [Authorize]
+        [HttpPut("edit")]
+        public async Task<IActionResult> EditAsync(Guid itemId, ItemAttributeDto itemAttributeDto,
             CancellationToken cancellationToken)
         {
-            await _itemAttributeService.EditAsync(itemAttributeDto, cancellationToken);
+            var userId = _identityService.GetUserIdentity();
+            await _itemAttributeService.EditAsync(itemId, itemAttributeDto, userId, cancellationToken);
 
             return Ok("Item Attribute edited");
         }
-        [HttpGet("delete")]
-        public async Task<IActionResult> DeleteAsync(Guid itemAttributeId,
+
+        [Authorize]
+        [HttpDelete("delete")]
+        public async Task<IActionResult> DeleteAsync(Guid itemId,
+            Guid itemAttributeId,
             CancellationToken cancellationToken)
         {
-            await _itemAttributeService.DeleteAsync(itemAttributeId, cancellationToken);
+            var userId = _identityService.GetUserIdentity();
+            await _itemAttributeService.DeleteAsync(itemId, itemAttributeId, userId, cancellationToken);
 
             return Ok("Item Attribute deleted");
         }

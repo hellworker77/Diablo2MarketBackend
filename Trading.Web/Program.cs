@@ -4,7 +4,7 @@ using Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.SwaggerUI;
-using Trading.Web.MiddleWares;
+using Trading.Web.Middlewares;
 
 namespace Trading.Web
 {
@@ -51,7 +51,7 @@ namespace Trading.Web
                 });
             }
 
-            app.UseMiddleware<ExceptionHandlerMiddleWare>();
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
 
             app.UseRouting();
 
