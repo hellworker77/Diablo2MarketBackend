@@ -14,4 +14,5 @@ public class ItemDto
     public string Name { get; set; }
     public Guid OwnerId { get; set; }
 #pragma warning restore CS8618
+    public DateTime PostedDate { get; set; }
 }
