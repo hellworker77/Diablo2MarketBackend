@@ -25,6 +25,8 @@ namespace Account.Web
                     migration => migration.MigrationsAssembly(migrationAssembly)));
 
             builder.Services.AddIdentities();
+            builder.Services.AddServices();
+            builder.Services.AddMappers();
 
             var app = builder.Build();
 
