@@ -1,13 +1,13 @@
 ﻿using Common.ExceptionHandlerFactory;
 
-namespace Trading.Web.MiddleWares;
+namespace Trading.Web.Middlewares;
 
-public class ExceptionHandlerMiddleWare
+public class ExceptionHandlerMiddleware
 {
     private readonly RequestDelegate _next;
     private readonly Func<Type, AbstractExceptionResponse> _responseHandlerFactory;
 
-    public ExceptionHandlerMiddleWare(RequestDelegate next,
+    public ExceptionHandlerMiddleware(RequestDelegate next,
         Func<Type, AbstractExceptionResponse> responseHandlerFactory)
     {
         _next = next;
