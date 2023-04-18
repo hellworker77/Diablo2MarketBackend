@@ -29,7 +29,6 @@ namespace Account.Web.Controllers
             return Ok(user);
         }
 
-        [Authorize]
         [HttpGet("id")]
         public async Task<IActionResult> GetByIdAsync(Guid userId)
         {
