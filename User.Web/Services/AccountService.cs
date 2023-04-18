@@ -22,7 +22,7 @@ namespace Account.Web.Services
             _applicationUserMapper = applicationUserMapper;
         }
         
-        public async Task<ApplicationUserDto> GetMeAsync(Guid userId)
+        public async Task<ApplicationUserDto> GetByIdAsync(Guid userId)
         {
             var user = await _userManager.FindByIdAsync(userId.ToString());
             if (user is null)
