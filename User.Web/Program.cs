@@ -49,6 +49,8 @@ namespace Account.Web
 
             app.UseRouting();
 
+            app.UseCors(builder => builder.AllowAnyOrigin());
+
             app.UseHttpsRedirection();
 
             app.UseAuthentication();
