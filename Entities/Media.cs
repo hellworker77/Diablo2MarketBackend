@@ -8,6 +8,8 @@ public class Media
     public MediaType Type { get; set; }
 #pragma warning disable CS8618
     public byte[] Data { get; set; }
+    public Guid? ItemId { get; set; }
+    public virtual Item? Item { get; set; }
     public Guid? MessageId { get; set; }
     public virtual Message? Message { get; set; }
     public Guid? ProfileId { get; set; }

@@ -6,6 +6,7 @@ public class Item
 {
     public Guid Id { get; set; }
     public uint Price { get; set; }
+    public virtual Media? Media { get; set; }
     public virtual Deal? Deal { get; set; }
     public ItemRarity Rarity { get; set; }
     public virtual List<ItemAttribute>? Attributes { get; set; }

@@ -5,7 +5,6 @@ using Riok.Mapperly.Abstractions;
 namespace Common.Mappers;
 
 [Mapper]
-
 public partial class ItemMapper
 {
     public partial ItemDto Map(Item item);

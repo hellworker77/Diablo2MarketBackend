@@ -7,6 +7,7 @@ public class ItemDto
 {
     public Guid Id { get; set; }
     public uint Price { get; set; }
+    public Guid? MediaId { get; set; }
     public Guid? DealId { get; set; }
     public ItemRarity Rarity { get; set; }
     public virtual List<ItemAttributeDto>? Attributes { get; set; }
