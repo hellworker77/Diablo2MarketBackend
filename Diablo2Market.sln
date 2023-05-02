@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entiti
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Filters", "Filters\Filters.csproj", "{EE602DAB-C0D6-4614-AB34-972A80AE4128}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Media.Web", "Media.Web\Media.Web.csproj", "{8082FCEF-06A6-4100-A1C9-9BFE4F7D70DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Media.Web", "Media.Web\Media.Web.csproj", "{8082FCEF-06A6-4100-A1C9-9BFE4F7D70DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
