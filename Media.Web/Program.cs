@@ -24,6 +24,9 @@ namespace Media.Web
                     migration => migration.MigrationsAssembly(migrationAssembly)));
 
             builder.Services.AddIdentities();
+            builder.Services.AddServices();
+            builder.Services.AddRepositories();
+            builder.Services.AddMappers();
             builder.Services.AddExceptionHandlers();
 
             var app = builder.Build();

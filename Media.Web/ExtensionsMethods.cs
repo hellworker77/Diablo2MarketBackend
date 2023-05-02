@@ -6,6 +6,12 @@ using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.DependencyInjection;
 using System.IdentityModel.Tokens.Jwt;
 using Common.ExceptionHandlerFactory;
+using Common.Services.Interfaces;
+using Common.Services;
+using Common.Mappers;
+using Dal.Interfaces;
+using Dal.Repositories;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Media.Web
 {
@@ -19,6 +25,22 @@ namespace Media.Web
                 .AddUserManager<UserManager<ApplicationUser>>()
                 .AddRoleManager<RoleManager<IdentityRole<Guid>>>()
                 .AddDefaultTokenProviders();
+        }
+
+        public static void AddServices(this IServiceCollection service)
+        {
+            service.AddTransient<IIdentityService, IdentityService>();
+            service.AddTransient<IMediaService, MediaService>();
+        }
+
+        public static void AddRepositories(this IServiceCollection service)
+        {
+            service.AddTransient<IMediaRepository, MediaRepository>();
+        }
+
+        public static void AddMappers(this IServiceCollection service)
+        {
+            service.AddTransient<MediaMapper>();
         }
 
         public static void AddExceptionHandlers(this IServiceCollection service)
@@ -46,7 +68,7 @@ namespace Media.Web
             {
                 options.Authority = identityUrl;
                 options.RequireHttpsMetadata = false;
-                options.Audience = "account";
+                options.Audience = "media";
             });
         }
 
