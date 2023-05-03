@@ -19,6 +19,7 @@ public class ItemRepository : IItemRepository
         CancellationToken cancellationToken)
     {
         var item = await _dbSet.AsNoTracking()
+            .Include(x => x.Media)
             .Include(x => x.Deal)
             .Include(x => x.Owner)
             .Include(x => x.Attributes)
@@ -32,6 +33,7 @@ public class ItemRepository : IItemRepository
         CancellationToken cancellationToken)
     {
         return await _dbSet.AsNoTracking()
+            .Include(x => x.Media)
             .Include(x => x.Deal)
             .Include(x => x.Owner)
             .Include(x => x.Attributes)
@@ -46,6 +48,7 @@ public class ItemRepository : IItemRepository
         CancellationToken cancellationToken)
     {
         var items = await _dbSet.AsNoTracking()
+            .Include(x => x.Media)
             .Include(x => x.Deal)
             .Include(x => x.Owner)
             .Include(x => x.Attributes)
