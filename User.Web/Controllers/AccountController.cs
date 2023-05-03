@@ -24,7 +24,15 @@ namespace Account.Web.Controllers
         public async Task<IActionResult> GetMeAsync()
         {
             var userId = _identityService.GetUserIdentity();
-            var user = await _accountService.GetMeAsync(userId);
+            var user = await _accountService.GetByIdAsync(userId);
+
+            return Ok(user);
+        }
+
+        [HttpGet("id")]
+        public async Task<IActionResult> GetByIdAsync(Guid userId)
+        {
+            var user = await _accountService.GetByIdAsync(userId);
 
             return Ok(user);
         }

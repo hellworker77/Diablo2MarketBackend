@@ -17,6 +17,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiGateWay", "ApiGateWay\Ap
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entities.csproj", "{CC73C514-F0B0-43DA-99F8-E5106CE9C9D1}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Filters", "Filters\Filters.csproj", "{EE602DAB-C0D6-4614-AB34-972A80AE4128}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Media.Web", "Media.Web\Media.Web.csproj", "{8082FCEF-06A6-4100-A1C9-9BFE4F7D70DD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +55,14 @@ Global
 		{CC73C514-F0B0-43DA-99F8-E5106CE9C9D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC73C514-F0B0-43DA-99F8-E5106CE9C9D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC73C514-F0B0-43DA-99F8-E5106CE9C9D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE602DAB-C0D6-4614-AB34-972A80AE4128}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE602DAB-C0D6-4614-AB34-972A80AE4128}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE602DAB-C0D6-4614-AB34-972A80AE4128}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE602DAB-C0D6-4614-AB34-972A80AE4128}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8082FCEF-06A6-4100-A1C9-9BFE4F7D70DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8082FCEF-06A6-4100-A1C9-9BFE4F7D70DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8082FCEF-06A6-4100-A1C9-9BFE4F7D70DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8082FCEF-06A6-4100-A1C9-9BFE4F7D70DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

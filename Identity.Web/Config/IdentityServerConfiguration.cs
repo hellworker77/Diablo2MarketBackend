@@ -23,7 +23,8 @@ public static class IdentityServerConfiguration
                     IdentityServerConstants.StandardScopes.Email,
                     "api",
                     "trading",
-                    "account"
+                    "account",
+                    "media"
                 }
             },
         };
@@ -83,6 +84,24 @@ public static class IdentityServerConfiguration
                     JwtClaimTypes.Id,
                     JwtClaimTypes.Profile
                 }
+            },
+            new ApiScope
+            {
+                Name = "media",
+                DisplayName = "media",
+                Enabled = true,
+                UserClaims =
+                {
+                    JwtClaimTypes.Name,
+                    JwtClaimTypes.Email,
+                    JwtClaimTypes.Subject,
+                    JwtClaimTypes.Role,
+                    JwtClaimTypes.Address,
+                    JwtClaimTypes.Confirmation,
+                    JwtClaimTypes.EmailVerified,
+                    JwtClaimTypes.Id,
+                    JwtClaimTypes.Profile
+                }
             }
         };
 
@@ -91,7 +110,8 @@ public static class IdentityServerConfiguration
         {
             new("api", "api") {Scopes = new List<string>{"api"}},
             new("trading", "trading") {Scopes = new List<string>{"trading"}},
-            new("account", "account") {Scopes = new List<string>{"account"}}
+            new("account", "account") {Scopes = new List<string>{"account"}},
+            new("media", "media") {Scopes = new List<string>{"media"}}
         };
 
     public static IEnumerable<IdentityResource> GetIdentityResources() =>

@@ -1,10 +1,15 @@
 ﻿using Entities;
+using Filters.Abstractions;
 
 namespace Dal.Interfaces;
 
 public interface IDealRepository
 {
     Task<Deal?> GetByIdAsync(Guid dealId,
+        CancellationToken cancellationToken);
+    Task<IList<Deal>> GetFilteredChunkAsync(int index,
+        int size,
+        AbstractFilterSpecification<Deal> abstractFilterSpecification,
         CancellationToken cancellationToken);
     Task<IList<Deal>> GetChunkAsync(int index,
         int size,

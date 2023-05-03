@@ -8,7 +8,7 @@ namespace Account.Web.Services.Interfaces
 {
     public interface IAccountService
     {
-        Task<ApplicationUserDto> GetMeAsync(Guid userId);
+        Task<ApplicationUserDto> GetByIdAsync(Guid userId);
         Task EncreaseBalanceAsync(Guid userId, 
             uint amount);
         Task<IdentityResult> RegisterAsync(string username,

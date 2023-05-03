@@ -2,6 +2,8 @@
 using Common.Services.Interfaces;
 using Entities;
 using Entities.Enums;
+using Filters;
+using Filters.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,6 +28,16 @@ namespace Trading.Web.Controllers
             CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
+        }
+
+        [HttpGet("last24HoursDeals")]
+        public async Task<IActionResult> GetLast24HoursDealsChunkAsync(int index,
+            int size,
+            CancellationToken cancellationToken)
+        {
+            var deals = await _dealService.GetFilteredChunkAsync(index, size, new Last24HoursDealsSpecification(), cancellationToken);
+
+            return Ok(deals);
         }
 
         [HttpGet("chunk")]

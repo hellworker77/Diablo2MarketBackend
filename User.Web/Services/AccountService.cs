@@ -4,6 +4,7 @@ using Common.Mappers;
 using Common.Models;
 using Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Account.Web.Services
 {
@@ -22,9 +23,13 @@ namespace Account.Web.Services
             _applicationUserMapper = applicationUserMapper;
         }
         
-        public async Task<ApplicationUserDto> GetMeAsync(Guid userId)
+        public async Task<ApplicationUserDto> GetByIdAsync(Guid userId)
         {
-            var user = await _userManager.FindByIdAsync(userId.ToString());
+            var user = await _userManager.Users
+                .Include(x => x.ProfilePictures)
+                .Include(x => x.Items!)
+                .ThenInclude(x => x.Attributes)
+                .FirstOrDefaultAsync(x => x.Id == userId);
             if (user is null)
             {
                 throw new EntityNotFoundException(typeof(ApplicationUser), userId);

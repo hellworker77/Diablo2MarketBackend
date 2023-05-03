@@ -1,10 +1,16 @@
 ﻿using Common.Models;
+using Entities;
+using Filters.Abstractions;
 
 namespace Common.Services.Interfaces;
 
 public interface IDealService
 {
     Task<DealDto> GetByIdAsync(Guid dealId,
+        CancellationToken cancellationToken);
+    Task<IList<DealDto>> GetFilteredChunkAsync(int index,
+        int size,
+        AbstractFilterSpecification<Deal> abstractFilterSpecification,
         CancellationToken cancellationToken);
     Task<IList<DealDto>> GetUserChunkAsync(Guid userId,
         int index,
