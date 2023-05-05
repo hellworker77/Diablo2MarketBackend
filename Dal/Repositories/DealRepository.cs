@@ -26,6 +26,8 @@ public class DealRepository : IDealRepository
             .Include(x => x.DealMembers)
             .Include(x => x.Goods)
             .ThenInclude(x => x.Attributes)
+            .Include(x => x.Goods)
+            .ThenInclude(x => x.Media)
             .FirstOrDefaultAsync(x => x.Id == dealId, cancellationToken);
 
         return deal;
@@ -42,6 +44,8 @@ public class DealRepository : IDealRepository
            .Include(x => x.DealMembers)
            .Include(x => x.Goods)
            .ThenInclude(x => x.Attributes)
+           .Include(x => x.Goods)
+           .ThenInclude(x => x.Media)
            .Where(abstractFilterSpecification.SpecificationExpression)
            .Skip(index * size)
            .Take(size)
@@ -61,6 +65,8 @@ public class DealRepository : IDealRepository
             .Include(x => x.DealMembers)
             .Include(x => x.Goods)
             .ThenInclude(x=> x.Attributes)
+            .Include(x => x.Goods)
+            .ThenInclude(x => x.Media)
             .Where(x => x.DealMembers.Any(c => c.UserId == userId))
             .Skip(index * size)
             .Take(size)
@@ -80,6 +86,8 @@ public class DealRepository : IDealRepository
             .ThenInclude(x=>x.User)
             .Include(x => x.Goods)
             .ThenInclude(x=>x.Attributes)
+            .Include(x => x.Goods)
+            .ThenInclude(x => x.Media)
             .Skip(index * size)
             .Take(size)
             .ToListAsync(cancellationToken);
