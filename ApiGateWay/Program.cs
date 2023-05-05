@@ -52,7 +52,13 @@ namespace ApiGateWay
 
                 app.DbInitialize();
             }
-            
+
+            app.UseCors(builder =>
+            {
+                builder.AllowAnyOrigin();
+                builder.AllowAnyHeader();
+                builder.AllowAnyMethod();
+            });
 
             app.UseHttpsRedirection();
 
