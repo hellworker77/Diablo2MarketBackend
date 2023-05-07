@@ -58,6 +58,25 @@ public class ItemRepository : IItemRepository
 
         return items;
     }
+
+    public async Task<IList<Item>> GetUserChunkAsync(Guid userId, 
+        int index, 
+        int size, 
+        CancellationToken cancellationToken)
+    {
+        var items = await _dbSet.AsNoTracking()
+            .Include(x => x.Media)
+            .Include(x => x.Deal)
+            .Include(x => x.Owner)
+            .Include(x => x.Attributes)
+            .Where(x => x.OwnerId == userId)
+            .Skip(index * size)
+            .Take(size)
+            .ToListAsync(cancellationToken);
+
+        return items;
+    }
+
     public async Task AddAsync(Item item,
         CancellationToken cancellationToken)
     {
