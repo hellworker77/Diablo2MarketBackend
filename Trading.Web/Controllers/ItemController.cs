@@ -1,4 +1,5 @@
 ﻿using Common.Models;
+using Common.Services;
 using Common.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -45,6 +46,28 @@ namespace Trading.Web.Controllers
             var itemsDto = await _itemService.GetChunkAsync(index, size, cancellationToken);
 
             return Ok(itemsDto);
+        }
+
+        [HttpGet("userChunk")]
+        public async Task<IActionResult> GetUserChunkAsync(Guid userId,
+            int index,
+            int size,
+            CancellationToken cancellationToken)
+        {
+            var deals = await _itemService.GetUserChunkAsync(userId, index, size, cancellationToken);
+            return Ok(deals);
+        }
+
+        [Authorize]
+        [HttpGet("ownChunk")]
+        public async Task<IActionResult> GetUserChunkAsync(int index,
+            int size,
+            CancellationToken cancellationToken)
+        {
+            var userId = _identityService.GetUserIdentity();
+
+            var deals = await _itemService.GetUserChunkAsync(userId, index, size, cancellationToken);
+            return Ok(deals);
         }
 
         [Authorize]
