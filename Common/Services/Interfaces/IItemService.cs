@@ -12,6 +12,10 @@ public interface IItemService
     Task<IList<ItemDto>> GetChunkAsync(int index,
         int size,
         CancellationToken cancellationToken);
+    Task<IList<ItemDto>> GetUserChunkAsync(Guid userId,
+            int index,
+            int size,
+            CancellationToken cancellationToken);
     Task AddAsync(ItemDto itemDto,
         CancellationToken cancellationToken);
     Task EditAsync(ItemDto itemDto,
