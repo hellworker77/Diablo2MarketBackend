@@ -12,6 +12,10 @@ public interface IItemRepository
     Task<IList<Item>> GetChunkAsync(int index,
         int size,
         CancellationToken cancellationToken);
+    Task<IList<Item>> GetUserChunkAsync(Guid userId,
+        int index,
+        int size,
+        CancellationToken cancellationToken);
     Task AddAsync(Item item,
         CancellationToken cancellationToken);
     Task EditAsync(Item item,

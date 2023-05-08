@@ -55,6 +55,20 @@ public class ItemService : IItemService
         return _mapper.MapList(items);
     }
 
+    public async Task<IList<ItemDto>> GetUserChunkAsync(Guid userId, 
+        int index, 
+        int size, 
+        CancellationToken cancellationToken)
+    {
+        var items = await _itemRepository.GetUserChunkAsync(userId, index, size, cancellationToken);
+        if (items.Count == 0)
+        {
+            throw new NullReferenceException("Items in that area not found");
+        }
+
+        return _mapper.MapList(items);
+    }
+
     public async Task AddAsync(ItemDto itemDto,
         CancellationToken cancellationToken)
     {
