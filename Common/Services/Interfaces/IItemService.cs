@@ -12,10 +12,13 @@ public interface IItemService
     Task<IList<ItemDto>> GetChunkAsync(int index,
         int size,
         CancellationToken cancellationToken);
+    Task<int> GetItemsCountAsync(CancellationToken cancellationToken);
     Task<IList<ItemDto>> GetUserChunkAsync(Guid userId,
             int index,
             int size,
             CancellationToken cancellationToken);
+    Task<int> GetUserItemsCountAsync(Guid userId,
+        CancellationToken cancellationToken);
     Task AddAsync(ItemDto itemDto,
         CancellationToken cancellationToken);
     Task EditAsync(ItemDto itemDto,
