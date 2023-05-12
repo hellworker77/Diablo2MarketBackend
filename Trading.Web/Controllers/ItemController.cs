@@ -48,6 +48,14 @@ namespace Trading.Web.Controllers
             return Ok(itemsDto);
         }
 
+        [HttpGet("itemsCount")]
+        public async Task<IActionResult> GetItemsCountAsync(CancellationToken cancellationToken)
+        {
+            var itemsCount = await _itemService.GetItemsCountAsync(cancellationToken);
+
+            return Ok(itemsCount);
+        }
+
         [HttpGet("userChunk")]
         public async Task<IActionResult> GetUserChunkAsync(Guid userId,
             int index,
@@ -56,6 +64,15 @@ namespace Trading.Web.Controllers
         {
             var deals = await _itemService.GetUserChunkAsync(userId, index, size, cancellationToken);
             return Ok(deals);
+        }
+
+        [HttpGet("userItemsCount")]
+        public async Task<IActionResult> GetUserItemsCountAsync(Guid userId,
+            CancellationToken cancellationToken)
+        {
+            var itemsCount = await _itemService.GetUserItemsCountAsync(userId, cancellationToken);
+
+            return Ok(itemsCount);
         }
 
         [Authorize]
@@ -68,6 +85,16 @@ namespace Trading.Web.Controllers
 
             var deals = await _itemService.GetUserChunkAsync(userId, index, size, cancellationToken);
             return Ok(deals);
+        }
+
+        [Authorize]
+        [HttpGet("ownItemsCount")]
+        public async Task<IActionResult> GetUserItemsCountAsync(CancellationToken cancellationToken)
+        {
+            var userId = _identityService.GetUserIdentity();
+            var itemsCount = await _itemService.GetUserItemsCountAsync(userId, cancellationToken);
+
+            return Ok(itemsCount);
         }
 
         [Authorize]

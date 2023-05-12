@@ -55,6 +55,13 @@ public class ItemService : IItemService
         return _mapper.MapList(items);
     }
 
+    public async Task<int> GetItemsCountAsync(CancellationToken cancellationToken)
+    {
+        var itemsCount = await _itemRepository.GetItemsCountAsync(cancellationToken);
+
+        return itemsCount;
+    }
+
     public async Task<IList<ItemDto>> GetUserChunkAsync(Guid userId, 
         int index, 
         int size, 
@@ -67,6 +74,14 @@ public class ItemService : IItemService
         }
 
         return _mapper.MapList(items);
+    }
+
+    public async Task<int> GetUserItemsCountAsync(Guid userId,
+        CancellationToken cancellationToken)
+    {
+        var itemsCount = await _itemRepository.GetUserItemsCountAsync(userId, cancellationToken);
+
+        return itemsCount;
     }
 
     public async Task AddAsync(ItemDto itemDto,

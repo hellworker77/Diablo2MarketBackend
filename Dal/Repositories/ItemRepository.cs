@@ -59,6 +59,13 @@ public class ItemRepository : IItemRepository
         return items;
     }
 
+    public async Task<int> GetItemsCountAsync(CancellationToken cancellationToken)
+    {
+        var itemsCount = await _dbSet.CountAsync(cancellationToken);
+
+        return itemsCount;
+    }
+ 
     public async Task<IList<Item>> GetUserChunkAsync(Guid userId, 
         int index, 
         int size, 
@@ -75,6 +82,16 @@ public class ItemRepository : IItemRepository
             .ToListAsync(cancellationToken);
 
         return items;
+    }
+
+    public async Task<int> GetUserItemsCountAsync(Guid userId,
+        CancellationToken cancellationToken)
+    {
+        var itemsCount = await _dbSet.AsNoTracking()
+            .Where(x => x.OwnerId == userId)
+            .CountAsync(cancellationToken);
+
+        return itemsCount;
     }
 
     public async Task AddAsync(Item item,

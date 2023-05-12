@@ -33,6 +33,22 @@
       }
     },
     {
+      "DownstreamPathTemplate": "/api/Deal/ownDealsCount",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7066
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Deal/ownDealsCount",
+      "UpstreamHttpMethod": [ "GET" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IdentityApiKey",
+        "AllowedScopes": [ "trading" ]
+      }
+    },
+    {
       "DownstreamPathTemplate": "/api/Deal/{any}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
@@ -82,6 +98,22 @@
         }
       ],
       "UpstreamPathTemplate": "/api/Item/ownChunk",
+      "UpstreamHttpMethod": [ "GET" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IdentityApiKey",
+        "AllowedScopes": [ "trading" ]
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Item/ownItemsCount",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7066
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Item/ownItemsCount",
       "UpstreamHttpMethod": [ "GET" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "IdentityApiKey",

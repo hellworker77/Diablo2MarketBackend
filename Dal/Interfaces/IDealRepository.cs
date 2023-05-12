@@ -14,9 +14,12 @@ public interface IDealRepository
     Task<IList<Deal>> GetChunkAsync(int index,
         int size,
         CancellationToken cancellationToken);
+    Task<int> GetDealsCountAsync(CancellationToken cancellationToken);
     Task<IList<Deal>> GetChunkAsync(Guid userId,
         int index,
         int size,
+        CancellationToken cancellationToken);
+    Task<int> GetUserDealsCountAsync(Guid userId,
         CancellationToken cancellationToken);
     Task CreateAsync(Deal deal,
         CancellationToken cancellationToken);
