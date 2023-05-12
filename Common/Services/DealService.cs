@@ -3,6 +3,7 @@ using Common.Mappers;
 using Common.Models;
 using Common.Services.Interfaces;
 using Dal.Interfaces;
+using Dal.Repositories;
 using Entities;
 using Entities.Enums;
 using Filters.Abstractions;
@@ -73,6 +74,14 @@ public class DealService : IDealService
         return _mapper.MapList(deals);
     }
 
+    public async Task<int> GetUserDealsCountAsync(Guid userId,
+        CancellationToken cancellationToken)
+    {
+        var dealsCount = await _dealRepository.GetUserDealsCountAsync(userId, cancellationToken);
+
+        return dealsCount;
+    }
+
     public async Task<IList<DealDto>> GetChunkAsync(int index,
         int size,
         CancellationToken cancellationToken)
@@ -84,6 +93,13 @@ public class DealService : IDealService
         }
 
         return _mapper.MapList(deals);
+    }
+
+    public async Task<int> GetDealsCountAsync(CancellationToken cancellationToken)
+    {
+        var dealsCount = await _dealRepository.GetDealsCountAsync(cancellationToken);
+
+        return dealsCount;
     }
 
     public async Task CreateAsync(Guid itemId,

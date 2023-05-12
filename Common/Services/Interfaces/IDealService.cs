@@ -16,9 +16,12 @@ public interface IDealService
         int index,
         int size,
         CancellationToken cancellationToken);
+    Task<int> GetUserDealsCountAsync(Guid userId,
+        CancellationToken cancellationToken);
     Task<IList<DealDto>> GetChunkAsync(int index,
         int size,
         CancellationToken cancellationToken);
+    Task<int> GetDealsCountAsync(CancellationToken cancellationToken);
     Task CreateAsync(Guid itemId,
         Guid userId,
         CancellationToken cancellationToken);

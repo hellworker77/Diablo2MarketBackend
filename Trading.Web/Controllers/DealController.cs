@@ -50,6 +50,14 @@ namespace Trading.Web.Controllers
             return Ok(deals);
         }
 
+        [HttpGet("dealsCount")]
+        public async Task<IActionResult> GetDealsCountAsync(CancellationToken cancellationToken)
+        {
+            var dealsCount = await _dealService.GetDealsCountAsync(cancellationToken);
+
+            return Ok(dealsCount);
+        }
+
         [HttpGet("userChunk")]
         public async Task<IActionResult> GetUserChunkAsync(Guid userId,
             int index,
@@ -58,6 +66,15 @@ namespace Trading.Web.Controllers
         {
             var deals = await _dealService.GetUserChunkAsync(userId, index, size, cancellationToken);
             return Ok(deals);
+        }
+
+        [HttpGet("userDealsCount")]
+        public async Task<IActionResult> GetUserDealsCountAsync(Guid userId,
+            CancellationToken cancellationToken)
+        {
+            var dealsCount = await _dealService.GetUserDealsCountAsync(userId, cancellationToken);
+
+            return Ok(dealsCount);
         }
 
         [Authorize]
@@ -69,6 +86,16 @@ namespace Trading.Web.Controllers
             var userId = _identityService.GetUserIdentity();
             var deals = await _dealService.GetUserChunkAsync(userId, index, size, cancellationToken);
             return Ok(deals);
+        }
+
+        [Authorize]
+        [HttpGet("ownDealsCount")]
+        public async Task<IActionResult> GetUserDealsCountAsync(CancellationToken cancellationToken)
+        {
+            var userId = _identityService.GetUserIdentity();
+            var dealsCount = await _dealService.GetUserDealsCountAsync(userId, cancellationToken);
+
+            return Ok(dealsCount);
         }
 
         [Authorize]

@@ -75,6 +75,13 @@ public class DealRepository : IDealRepository
         return deals;
     }
 
+    public async Task<int> GetDealsCountAsync(CancellationToken cancellationToken)
+    {
+        var dealsCount = await _dbSet.CountAsync(cancellationToken);
+
+        return dealsCount;
+    }
+
     public async Task<IList<Deal>> GetChunkAsync(int index,
         int size,
         CancellationToken cancellationToken)
@@ -93,6 +100,17 @@ public class DealRepository : IDealRepository
             .ToListAsync(cancellationToken);
 
         return deals;
+    }
+
+    public async Task<int> GetUserDealsCountAsync(Guid userId,
+        CancellationToken cancellationToken)
+    {
+        var dealsCount = await _dbSet.AsNoTracking()
+            .Include(x => x.DealMembers)
+            .Where(x => x.DealMembers.Any(c => c.UserId == userId))
+            .CountAsync(cancellationToken);
+
+        return dealsCount;
     }
 
     public async Task CreateAsync(Deal deal,
