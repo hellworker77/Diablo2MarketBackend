@@ -54,6 +54,48 @@ public class DealRepository : IDealRepository
         return deals;
     }
 
+    public async Task<IList<Deal>> GetFilteredChunkAsync(Guid userId,
+        int index,
+        int size,
+        AbstractFilterSpecification<Deal> abstractFilterSpecification,
+        CancellationToken cancellationToken)
+    {
+        var deals = await _dbSet.AsNoTracking()
+           .Include(x => x.Discussion!)
+           .ThenInclude(x => x.Members)
+           .Include(x => x.DealMembers)
+           .Include(x => x.Goods)
+           .ThenInclude(x => x.Attributes)
+           .Include(x => x.Goods)
+           .ThenInclude(x => x.Media)
+           .Where(x => x.DealMembers.Any(c => c.UserId == userId))
+           .Where(abstractFilterSpecification.SpecificationExpression)
+           .Skip(index * size)
+           .Take(size)
+           .ToListAsync(cancellationToken);
+
+        return deals;
+    }
+
+    public async Task<int> GetFilteredDealsCountAsync(Guid userId,
+        AbstractFilterSpecification<Deal> abstractFilterSpecification,
+        CancellationToken cancellationToken)
+    {
+        var dealsCount = await _dbSet.AsNoTracking()
+           .Include(x => x.Discussion!)
+           .ThenInclude(x => x.Members)
+           .Include(x => x.DealMembers)
+           .Include(x => x.Goods)
+           .ThenInclude(x => x.Attributes)
+           .Include(x => x.Goods)
+           .ThenInclude(x => x.Media)
+           .Where(x => x.DealMembers.Any(c => c.UserId == userId))
+           .Where(abstractFilterSpecification.SpecificationExpression)
+           .CountAsync(cancellationToken);
+
+        return dealsCount;
+    }
+
     public async Task<IList<Deal>> GetChunkAsync(Guid userId,
         int index,
         int size,
