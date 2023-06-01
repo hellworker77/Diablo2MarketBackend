@@ -33,6 +33,54 @@
       }
     },
     {
+      "DownstreamPathTemplate": "/api/Deal/inProgressDealsChunk",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7066
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Deal/inProgressDealsChunk",
+      "UpstreamHttpMethod": [ "GET" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IdentityApiKey",
+        "AllowedScopes": [ "trading" ]
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Deal/suspendedDealsChunk",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7066
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Deal/suspendedDealsChunk",
+      "UpstreamHttpMethod": [ "GET" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IdentityApiKey",
+        "AllowedScopes": [ "trading" ]
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Deal/successDealsChunk",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7066
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Deal/successDealsChunk",
+      "UpstreamHttpMethod": [ "GET" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IdentityApiKey",
+        "AllowedScopes": [ "trading" ]
+      }
+    },
+    {
       "DownstreamPathTemplate": "/api/Deal/ownDealsCount",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
@@ -42,6 +90,54 @@
         }
       ],
       "UpstreamPathTemplate": "/api/Deal/ownDealsCount",
+      "UpstreamHttpMethod": [ "GET" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IdentityApiKey",
+        "AllowedScopes": [ "trading" ]
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Deal/inProgressDealsCount",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7066
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Deal/inProgressDealsCount",
+      "UpstreamHttpMethod": [ "GET" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IdentityApiKey",
+        "AllowedScopes": [ "trading" ]
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Deal/suspendedDealsCount",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7066
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Deal/suspendedDealsCount",
+      "UpstreamHttpMethod": [ "GET" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IdentityApiKey",
+        "AllowedScopes": [ "trading" ]
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Deal/successDealsCount",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7066
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Deal/successDealsCount",
       "UpstreamHttpMethod": [ "GET" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "IdentityApiKey",
