@@ -105,9 +105,9 @@ namespace Trading.Web.Controllers
             var userId = _identityService.GetUserIdentity();
             itemDto.OwnerId = userId;
 
-            await _itemService.AddAsync(itemDto, cancellationToken);
+            var itemId = await _itemService.AddAsync(itemDto, cancellationToken);
 
-            return Ok("Item added");
+            return Ok(itemId);
         }
 
         [Authorize]

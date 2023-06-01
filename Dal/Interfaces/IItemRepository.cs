@@ -19,7 +19,7 @@ public interface IItemRepository
         CancellationToken cancellationToken);
     Task<int> GetUserItemsCountAsync(Guid userId,
         CancellationToken cancellationToken);
-    Task AddAsync(Item item,
+    Task<Guid> AddAsync(Item item,
         CancellationToken cancellationToken);
     Task EditAsync(Item item,
         CancellationToken cancellationToken);
