@@ -11,6 +11,14 @@ public interface IDealRepository
         int size,
         AbstractFilterSpecification<Deal> abstractFilterSpecification,
         CancellationToken cancellationToken);
+    Task<IList<Deal>> GetFilteredChunkAsync(Guid userId,
+        int index,
+        int size,
+        AbstractFilterSpecification<Deal> abstractFilterSpecification,
+        CancellationToken cancellationToken);
+    Task<int> GetFilteredDealsCountAsync(Guid userId,
+        AbstractFilterSpecification<Deal> abstractFilterSpecification,
+        CancellationToken cancellationToken);
     Task<IList<Deal>> GetChunkAsync(int index,
         int size,
         CancellationToken cancellationToken);

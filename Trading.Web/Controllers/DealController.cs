@@ -35,7 +35,7 @@ namespace Trading.Web.Controllers
             int size,
             CancellationToken cancellationToken)
         {
-            var deals = await _dealService.GetFilteredChunkAsync(index, size, new Last24HoursDealsSpecification(), cancellationToken);
+            var deals = await _dealService.GetFilteredChunkAsync(index, size, DealFilterSpecifications.Last24Hours, cancellationToken);
 
             return Ok(deals);
         }
@@ -94,6 +94,72 @@ namespace Trading.Web.Controllers
         {
             var userId = _identityService.GetUserIdentity();
             var dealsCount = await _dealService.GetUserDealsCountAsync(userId, cancellationToken);
+
+            return Ok(dealsCount);
+        }
+
+        [Authorize]
+        [HttpGet("inProgressDealsChunk")]
+        public async Task<IActionResult> GetInProgressDealsChunkAsync(int index,
+            int size,
+            CancellationToken cancellationToken)
+        {
+            var userId = _identityService.GetUserIdentity();
+            var deals = await _dealService.GetFilteredChunkAsync(userId, index, size, DealFilterSpecifications.InProgress, cancellationToken);
+
+            return Ok(deals);
+        }
+
+        [Authorize]
+        [HttpGet("inProgressDealsCount")]
+        public async Task<IActionResult> GetInProgressDealsCountAsync(CancellationToken cancellationToken)
+        {
+            var userId = _identityService.GetUserIdentity();
+            var dealsCount = await _dealService.GetFilteredDealsCountAsync(userId, DealFilterSpecifications.InProgress, cancellationToken);
+
+            return Ok(dealsCount);
+        }
+
+        [Authorize]
+        [HttpGet("suspendedDealsChunk")]
+        public async Task<IActionResult> GetSuspendedDealsChunkAsync(int index,
+            int size,
+            CancellationToken cancellationToken)
+        {
+            var userId = _identityService.GetUserIdentity();
+            var deals = await _dealService.GetFilteredChunkAsync(userId, index, size, DealFilterSpecifications.Suspended, cancellationToken);
+
+            return Ok(deals);
+        }
+
+        [Authorize]
+        [HttpGet("suspendedDealsCount")]
+        public async Task<IActionResult> GetSuspendedDealsCountAsync(CancellationToken cancellationToken)
+        {
+            var userId = _identityService.GetUserIdentity();
+            var dealsCount = await _dealService.GetFilteredDealsCountAsync(userId, DealFilterSpecifications.Suspended, cancellationToken);
+
+            return Ok(dealsCount);
+        }
+
+        [Authorize]
+        [HttpGet("successDealsChunk")]
+        public async Task<IActionResult> GetSuccessDealsChunkAsync(int index,
+            int size,
+            CancellationToken cancellationToken)
+        {
+            var userId = _identityService.GetUserIdentity();
+            var deals = await _dealService.GetFilteredChunkAsync(userId, index, size, DealFilterSpecifications.Success, cancellationToken);
+
+            return Ok(deals);
+        }
+
+        [Authorize]
+        [HttpGet("successDealsCount")]
+        public async Task<IActionResult> GetSuccessDealsCountAsync(CancellationToken cancellationToken)
+        {
+            var userId = _identityService.GetUserIdentity();
+            var dealsCount = await _dealService.GetFilteredDealsCountAsync(userId, DealFilterSpecifications.Success, cancellationToken);
 
             return Ok(dealsCount);
         }

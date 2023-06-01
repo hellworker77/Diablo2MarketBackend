@@ -16,7 +16,15 @@ public interface IDealService
         int index,
         int size,
         CancellationToken cancellationToken);
+    Task<IList<DealDto>> GetFilteredChunkAsync(Guid userId,
+        int index,
+        int size,
+        AbstractFilterSpecification<Deal> abstractFilterSpecification,
+        CancellationToken cancellationToken);
     Task<int> GetUserDealsCountAsync(Guid userId,
+        CancellationToken cancellationToken);
+    Task<int> GetFilteredDealsCountAsync(Guid userId,
+        AbstractFilterSpecification<Deal> abstractFilterSpecification,
         CancellationToken cancellationToken);
     Task<IList<DealDto>> GetChunkAsync(int index,
         int size,

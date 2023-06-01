@@ -60,6 +60,30 @@ public class DealService : IDealService
         return _mapper.MapList(deals);
     }
 
+    public async Task<IList<DealDto>> GetFilteredChunkAsync(Guid userId,
+        int index,
+        int size,
+        AbstractFilterSpecification<Deal> abstractFilterSpecification,
+        CancellationToken cancellationToken)
+    {
+        var deals = await _dealRepository.GetFilteredChunkAsync(userId, index, size, abstractFilterSpecification, cancellationToken);
+        if (deals is null)
+        {
+            throw new NullReferenceException("Deals in that area are not found");
+        }
+
+        return _mapper.MapList(deals);
+    }
+
+    public async Task<int> GetFilteredDealsCountAsync(Guid userId,
+        AbstractFilterSpecification<Deal> abstractFilterSpecification,
+        CancellationToken cancellationToken)
+    {
+        var dealsCount = await _dealRepository.GetFilteredDealsCountAsync(userId, abstractFilterSpecification, cancellationToken);
+
+        return dealsCount;
+    }
+
     public async Task<IList<DealDto>> GetUserChunkAsync(Guid userId,
         int index,
         int size,
