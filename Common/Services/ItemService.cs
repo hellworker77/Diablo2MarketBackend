@@ -84,14 +84,14 @@ public class ItemService : IItemService
         return itemsCount;
     }
 
-    public async Task AddAsync(ItemDto itemDto,
+    public async Task<Guid> AddAsync(ItemDto itemDto,
         CancellationToken cancellationToken)
     {
         var item = _mapper.ReverseMap(itemDto);
 
         item.PostedDate = DateTime.Now.ToUniversalTime();
 
-        await _itemRepository.AddAsync(item, cancellationToken);
+        var itemId = await _itemRepository.AddAsync(item, cancellationToken);
 
         if (item.Attributes != null)
         {
@@ -101,6 +101,8 @@ public class ItemService : IItemService
                 await _itemAttributeRepository.AddAsync(attribute, cancellationToken);
             }
         }
+
+        return itemId;
     }
 
     public async Task EditAsync(ItemDto itemDto,

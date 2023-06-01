@@ -94,11 +94,13 @@ public class ItemRepository : IItemRepository
         return itemsCount;
     }
 
-    public async Task AddAsync(Item item,
+    public async Task<Guid> AddAsync(Item item,
         CancellationToken cancellationToken)
     {
         _applicationContext.Entry(item).State = EntityState.Added;
         await _applicationContext.SaveChangesAsync(cancellationToken);
+
+        return item.Id;
     }
     public async Task EditAsync(Item item,
         CancellationToken cancellationToken)

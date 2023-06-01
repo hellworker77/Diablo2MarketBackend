@@ -19,7 +19,7 @@ public interface IItemService
             CancellationToken cancellationToken);
     Task<int> GetUserItemsCountAsync(Guid userId,
         CancellationToken cancellationToken);
-    Task AddAsync(ItemDto itemDto,
+    Task<Guid> AddAsync(ItemDto itemDto,
         CancellationToken cancellationToken);
     Task EditAsync(ItemDto itemDto,
         Guid userId,
