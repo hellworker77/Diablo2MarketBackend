@@ -1,9 +1,8 @@
-﻿using Entities;
-
-namespace Common.Models;
+﻿namespace Common.Models;
 
 public class ApplicationUserDto
 {
+    public Guid Id { get; set; }
     public uint Balance { get; set; }
 #pragma warning disable CS8618 
     public string UserName { get; set; }
