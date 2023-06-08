@@ -1,12 +1,12 @@
-﻿using Account.Web.Services.Interfaces;
-using Common.Exceptions;
+﻿using Common.Exceptions;
 using Common.Mappers;
 using Common.Models;
+using Common.Services.Interfaces;
 using Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Account.Web.Services
+namespace Common.Services
 {
     public class AccountService : IAccountService
     {
