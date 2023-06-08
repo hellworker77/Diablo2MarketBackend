@@ -1,6 +1,4 @@
-﻿using Account.Web.Services;
-using Account.Web.Services.Interfaces;
-using Common.ExceptionHandlerFactory;
+﻿using Common.ExceptionHandlerFactory;
 using Common.Mappers;
 using Common.Services;
 using Common.Services.Interfaces;

@@ -1,5 +1,4 @@
-﻿using Account.Web.Services.Interfaces;
-using Common.Services.Interfaces;
+﻿using Common.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

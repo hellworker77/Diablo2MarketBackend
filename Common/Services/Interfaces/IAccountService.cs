@@ -1,10 +1,7 @@
 ﻿using Common.Models;
-using Common.Services.Interfaces;
-using Entities;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 
-namespace Account.Web.Services.Interfaces
+namespace Common.Services.Interfaces
 {
     public interface IAccountService
     {
