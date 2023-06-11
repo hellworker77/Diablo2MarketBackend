@@ -46,6 +46,38 @@ namespace Account.Web.Controllers
             return Ok("Balance has been increased");
         }
 
+        [Authorize]
+        [HttpPut("update")]
+        public async Task<IActionResult> UpdateAsync(string username,
+            string email,
+            CancellationToken cancellationToken)
+        {
+            var userId = _identityService.GetUserIdentity();
+            var result = await _accountService.UpdateAsync(userId, username, email, cancellationToken);
+            if (result.Succeeded)
+            {
+                return Ok(result.ToString());
+            }
+
+            return BadRequest(result.ToString());
+        }
+
+        [Authorize]
+        [HttpPut("changePassword")]
+        public async Task<IActionResult> ChangePasswordAsync(string newPassword,
+            string oldPassword,
+            CancellationToken cancellationToken)
+        {
+            var userId = _identityService.GetUserIdentity();
+            var result = await _accountService.ChangePasswordAsync(userId, newPassword, oldPassword, cancellationToken);
+            if (result.Succeeded)
+            {
+                return Ok(result.ToString());
+            }
+
+            return BadRequest(result.ToString());
+        }
+
         [HttpPost("register")]
         public async Task<IActionResult> RegisterAsync(string username, 
             string email, 

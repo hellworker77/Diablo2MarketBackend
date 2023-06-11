@@ -55,6 +55,37 @@ namespace Common.Services
             }
         }
 
+        public async Task<IdentityResult> UpdateAsync(Guid userId,
+            string username,
+            string email,
+            CancellationToken cancellationToken)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            if (user is null)
+            {
+                throw new EntityNotFoundException(typeof(ApplicationUser), userId);
+            }
+
+            user.UserName = username;
+            user.Email = email;
+
+            return await _userManager.UpdateAsync(user);
+        }
+
+        public async Task<IdentityResult> ChangePasswordAsync(Guid userId,
+            string newPassword,
+            string oldPassword,
+            CancellationToken cancellationToken)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            if (user is null)
+            {
+                throw new EntityNotFoundException(typeof(ApplicationUser), userId);
+            }
+
+            return await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
+        }
+
         public async Task<IdentityResult> RegisterAsync(string username, 
             string email, 
             string password)
